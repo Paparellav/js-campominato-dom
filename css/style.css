@@ -39,10 +39,10 @@ header button {
 main {
     width: 100%;
     height: calc(100vh - 130px);
+    background-color: #7fffd4;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #7fffd4;
 }
 
 footer {
@@ -56,6 +56,12 @@ footer div {
     margin-left: 2rem;
 }
 
+#result {
+    text-align: center;
+    font-size: .9rem;
+    margin-top: 1.5rem;
+}
+
 .grid-container {
     display: none;
     height: 520px;
@@ -63,7 +69,6 @@ footer div {
     border: 1px solid white;
     display: flex;
     flex-wrap: wrap;
-    cursor: pointer;
 }
 
 .grid-box {
@@ -74,6 +79,7 @@ footer div {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .grid-box2 {
@@ -84,6 +90,7 @@ footer div {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .grid-box3 {
@@ -94,6 +101,7 @@ footer div {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .active {

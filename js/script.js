@@ -20,6 +20,8 @@
         // Se la lunghezza dell'array di numeri corretti è uguale ai tentativi massimi:
             // L'utente ha vinto
 
+let selectedCells = [];
+
 const playButton = document.querySelector("button");
 playButton.addEventListener("click", function () {
 
@@ -28,6 +30,10 @@ playButton.addEventListener("click", function () {
     const gridContainer = document.querySelector(".grid-container");
     gridContainer.classList.remove("hidden");
     gridContainer.innerHTML = "";
+    const resultText = document.getElementById("result");
+    resultText.innerHTML = "";
+    gridContainer.style.pointerEvents = "initial";
+    selectedCells = [];
 
     const difficults = document.getElementById("difficolta").value;
     console.log(difficults);
@@ -43,10 +49,10 @@ playButton.addEventListener("click", function () {
 
     const bombsNumber = 16;
     const bombsArray = generateRndNumbers(bombsNumber, gridBoxes);
-    console.log(bombsArray);  
-    const selectedCells = [];
-    console.log(selectedCells);  
+    console.log(bombsArray);
+    const attempts = gridBoxes - bombsNumber;
 
+    const bombBoxes = document.getElementsByClassName("bomb-box");
     for (let i = 1; i <= gridBoxes; i++) {
 
         const gridNumber = i;
@@ -69,17 +75,25 @@ playButton.addEventListener("click", function () {
 
             if (bombsArray.includes(selectedNumber)) {
                 this.classList.add("bomb-box");
+                const result = document.getElementById("result");
+                result.classList.remove("hidden");
+                result.innerHTML = `Hai perso cojone! Il tuo punteggio è: ${selectedCells.length}`;
                 gridContainer.style.pointerEvents = "none";
-                alert ("Hai perso!")
-            } else {
+            } else {  
                 this.classList.add("active");
                 selectedCells.push(selectedNumber);
                 this.style.pointerEvents = "none";
+                if (selectedCells.length >= attempts ) {
+                    const result = document.getElementById("result");
+                    result.classList.remove("hidden");
+                    result.innerHTML = `Hai vinto!`;
+                }
             }
-            
+
+            // console.log(selectedCells);
         });
 
-        gridContainer.append(newElement);  
+        gridContainer.append(newElement);
     }
 });
 
@@ -103,6 +117,6 @@ function generateRndNumbers (numberOfBombs, numbersRange) {
     return bombsArray;
 }
 
-function getRndInteger(min, max) {
+function getRndInteger (min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
-  }
+}
