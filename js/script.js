@@ -43,22 +43,18 @@ playButton.addEventListener("click", function () {
 
     const bombsNumber = 16;
     const bombsArray = generateRndNumbers(bombsNumber, gridBoxes);
-    const checkedCells = [];
-    console.log(bombsArray);
-    console.log(checkedCells);
+    console.log(bombsArray);  
+    const selectedCells = [];
+    console.log(selectedCells);  
 
     for (let i = 1; i <= gridBoxes; i++) {
 
         const gridNumber = i;
         
-        //2. Creare un elemento html
         const newElement = document.createElement("div");
-        // console.log(newElement);
-    
-        //3. Aggiungere lo span al div creato pocanzi
+        
         newElement.innerHTML = `<span>${gridNumber}</span>`;
     
-        //4. Assegnare la classe grid-box
         if (difficults === "easy") {
             newElement.classList.add("grid-box");
         } else if (difficults === "medium") {
@@ -67,23 +63,22 @@ playButton.addEventListener("click", function () {
             newElement.classList.add("grid-box3");
         }
         
-        // aggiungo all'elmento appena creato la gestione del click
-        
         newElement.addEventListener("click", function() {
 
-            if (bombsArray.includes(gridNumber)) {
+            const selectedNumber = parseInt(this.querySelector("span").textContent);
+
+            if (bombsArray.includes(selectedNumber)) {
                 this.classList.add("bomb-box");
                 gridContainer.style.pointerEvents = "none";
                 alert ("Hai perso!")
             } else {
                 this.classList.add("active");
+                selectedCells.push(selectedNumber);
                 this.style.pointerEvents = "none";
-                checkedCells.push(gridNumber);
             }
             
         });
-    
-        // appendo questo elemnto al contenitore
+
         gridContainer.append(newElement);  
     }
 });
