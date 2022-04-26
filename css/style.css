@@ -104,3 +104,8 @@ footer div {
 .hidden {
     display: none;
 }
+
+.bomb-box {
+    background-color: tomato;
+    color: white;
+}
