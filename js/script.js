@@ -51,15 +51,14 @@ playButton.addEventListener("click", function () {
     const bombsArray = generateRndNumbers(bombsNumber, gridBoxes);
     console.log(bombsArray);
     const attempts = gridBoxes - bombsNumber;
+    const cells = document.getElementsByClassName("bomb-box");
 
-    const bombBoxes = document.getElementsByClassName("bomb-box");
     for (let i = 1; i <= gridBoxes; i++) {
-
-        const gridNumber = i;
         
         const newElement = document.createElement("div");
+        newElement.classList.add("cell");
         
-        newElement.innerHTML = `<span>${gridNumber}</span>`;
+        newElement.innerHTML = `<span>${i}</span>`;
     
         if (difficults === "easy") {
             newElement.classList.add("grid-box");
@@ -74,11 +73,19 @@ playButton.addEventListener("click", function () {
             const selectedNumber = parseInt(this.querySelector("span").textContent);
 
             if (bombsArray.includes(selectedNumber)) {
-                this.classList.add("bomb-box");
-                const result = document.getElementById("result");
-                result.classList.remove("hidden");
-                result.innerHTML = `Hai perso cojone! Il tuo punteggio è: ${selectedCells.length}`;
-                gridContainer.style.pointerEvents = "none";
+                const cells = document.querySelectorAll(".cell");
+
+                for (let i = 0; i < gridBoxes; i++) {
+                    const numCell = parseInt(cells[i].textContent);
+
+                    if (bombsArray.includes(numCell)) {
+                        cells[i].classList.add("bomb-box")
+                        const result = document.getElementById("result");
+                        result.classList.remove("hidden");
+                        result.innerHTML = `Hai perso! Il tuo punteggio è: ${selectedCells.length}`;
+                        gridContainer.style.pointerEvents = "none";
+                    }
+                }
             } else {  
                 this.classList.add("active");
                 selectedCells.push(selectedNumber);
@@ -90,7 +97,7 @@ playButton.addEventListener("click", function () {
                 }
             }
 
-            // console.log(selectedCells);
+            console.log(selectedCells);
         });
 
         gridContainer.append(newElement);
@@ -107,7 +114,7 @@ playButton.addEventListener("click", function () {
  */
 function generateRndNumbers (numberOfBombs, numbersRange) {
     const bombsArray = [];
-    while (bombsArray.length < 16) {
+    while (bombsArray.length < numberOfBombs) {
         const randomNumber = getRndInteger(numberOfBombs, numbersRange);
         if (!bombsArray.includes(randomNumber)) {
             bombsArray.push(randomNumber);
